@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AVM Investments Pty Ltd</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Montserrat', Arial, sans-serif;
+  background: #fff;
+  color: #1a1a1a;
+  line-height: 1.6;
+}
+
+/* ========== SPLASH ========== */
+#splash {
+  position: fixed;
+  inset: 0;
+  background: #0d9488;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+#splash .top { height: 18%; background: #0d9488; }
+#splash .middle {
+  flex: 1;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 30px 20px;
+}
+#splash .logo-box {
+  position: absolute;
+  top: 22px;
+  right: 22px;
+  text-align: right;
+}
+#splash .logo-box .big {
+  font-size: 38px;
+  font-weight: 800;
+  color: #0d9488;
+  letter-spacing: -1px;
+  line-height: 1;
+}
+#splash .logo-box .name {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #111;
+}
+#splash .logo-box .sub {
+  font-size: 10px;
+  color: #0d9488;
+  letter-spacing: 0.5px;
+}
+#splash .arc {
+  width: 270px;
+  height: 135px;
+  background: #0d9488;
+  border-radius: 135px 135px 0 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 22px;
+  position: relative;
+  margin-bottom: 28px;
+  box-shadow: 0 10px 30px rgba(13,148,136,0.25);
+}
+#splash .arc::before {
+  content: '';
+  position: absolute;
+  top: -7px; left: -7px; right: -7px; bottom: 0;
+  border: 6px solid #111;
+  border-bottom: none;
+  border-radius: 145px 145px 0 0;
+}
+#splash .arc h1 {
+  color: #fff;
+  font-size: 26px;
+  font-weight: 800;
+  text-align: center;
+  line-height: 1.15;
+  text-transform: uppercase;
+}
+#splash .find-btn {
+  background: #111;
+  color: #fff;
+  border: none;
+  padding: 13px 34px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  border-radius: 4px;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: 0.2s;
+}
+#splash .find-btn:hover { background: #0d9488; }
+#splash .bottom {
+  height: 20%;
+  background: #0d9488;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: 0.5px;
+}
+
+/* ========== MAIN SITE ========== */
+#mainSite { display: none; }
+
+/* Header */
+.site-header {
+  position: sticky;
+  top: 0;
+  background: #fff;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 100;
+  box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+}
+.header-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.header-logo .mark {
+  width: 42px;
+  height: 42px;
+  background: linear-gradient(135deg, #0d9488, #0f766e);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 800;
+  font-size: 16px;
+}
+.header-logo .text strong {
+  display: block;
+  font-size: 15px;
+  font-weight: 800;
+  color: #111;
+  line-height: 1.1;
+}
+.header-logo .text span {
+  font-size: 10px;
+  color: #0d9488;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+.menu-btn {
+  background: #0d9488;
+  color: #fff;
+  border: none;
+  width: 42px;
+  height: 42px;
+  border-radius: 8px;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.nav-drawer {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 0 0 12px 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  min-width: 200px;
+  overflow: hidden;
+}
+.nav-drawer.open { display: block; }
+.nav-drawer a {
+  display: block;
+  padding: 14px 20px;
+  color: #111;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  border-bottom: 1px solid #f3f4f6;
+  cursor: pointer;
+}
+.nav-drawer a:hover { background: #f0fdfa; color: #0d9488; }
+
+/* Hero */
+.hero {
+  position: relative;
+  background: linear-gradient(135deg, #0f766e 0%, #0d9488 50%, #14b8a6 100%);
+  color: #fff;
+  padding: 70px 22px 80px;
+  text-align: center;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  opacity: 0.4;
+}
+.hero-content { position: relative; z-index: 2; max-width: 560px; margin: 0 auto; }
+.hero-badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(4px);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 8px 18px;
+  border-radius: 30px;
+  margin-bottom: 22px;
+  text-transform: uppercase;
+}
+.hero h1 {
+  font-size: 32px;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 18px;
+}
+.hero h1 span {
+  display: inline-block;
+  border-bottom: 4px solid #5eead4;
+  padding-bottom: 2px;
+}
+.hero p {
+  font-size: 15px;
+  opacity: 0.95;
+  margin-bottom: 28px;
+  max-width: 440px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.btn-primary {
+  display: inline-block;
+  background: #166534;
+  color: #fff;
+  border: none;
+  padding: 14px 32px;
+  font-size: 15px;
+  font-weight: 700;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: 0.2s;
+}
+.btn-primary:hover { background: #14532d; transform: translateY(-1px); }
+
+/* Sections */
+.section {
+  padding: 50px 22px;
+  max-width: 680px;
+  margin: 0 auto;
+}
+.section-label {
+  color: #0d9488;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.section h2 {
+  font-size: 26px;
+  font-weight: 800;
+  color: #111;
+  margin-bottom: 16px;
+  line-height: 1.25;
+}
+.section p {
+  color: #4b5563;
+  font-size: 15px;
+  margin-bottom: 14px;
+}
+.btn-teal {
+  display: inline-block;
+  background: #0d9488;
+  color: #fff;
+  border: none;
+  padding: 12px 26px;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: 0.2s;
+}
+.btn-teal:hover { background: #0f766e; }
+
+/* Calculator */
+.calc-box {
+  background: #f8fafc;
+  border-radius: 16px;
+  padding: 28px 22px;
+  margin-top: 30px;
+  border: 1px solid #e2e8f0;
+}
+.calc-row {
+  margin-bottom: 26px;
+}
+.calc-row label {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 10px;
+  color: #334155;
+}
+.calc-row .value-box {
+  background: #fff;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-weight: 700;
+  color: #0d9488;
+  min-width: 90px;
+  text-align: center;
+}
+input[type=range] {
+  width: 100%;
+  height: 6px;
+  -webkit-appearance: none;
+  background: #e2e8f0;
+  border-radius: 4px;
+  outline: none;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  background: #0d9488;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 3px solid #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+.range-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #94a3b8;
+  margin-top: 6px;
+}
+.result-card {
+  background: #f0f9ff;
+  border-radius: 14px;
+  padding: 22px;
+  margin-top: 10px;
+}
+.result-card h3 {
+  font-size: 15px;
+  color: #334155;
+  margin-bottom: 4px;
+}
+.result-card .big-num {
+  font-size: 32px;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 6px;
+}
+.result-card .note {
+  font-size: 13px;
+  color: #64748b;
+  margin-bottom: 16px;
+}
+.fee-line {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  padding: 8px 0;
+  border-top: 1px solid #e2e8f0;
+  color: #475569;
+}
+.fee-line strong { color: #0f172a; }
+.btn-apply-calc {
+  display: block;
+  width: 100%;
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  padding: 15px;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 18px;
+  transition: 0.2s;
+}
+.btn-apply-calc:hover { background: #1d4ed8; }
+
+/* Lists */
+.need-list, .how-list {
+  margin: 16px 0 24px;
+  padding-left: 4px;
+}
+.need-list li, .how-list li {
+  margin-bottom: 8px;
+  color: #4b5563;
+  font-size: 15px;
+  list-style: none;
+  position: relative;
+  padding-left: 22px;
+}
+.need-list li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #0d9488;
+  font-weight: 700;
+}
+.how-list li::before {
+  content: attr(data-num);
+  position: absolute;
+  left: 0;
+  color: #0d9488;
+  font-weight: 700;
+}
+
+/* ========== APPLICATION FORM VIEW ========== */
+#applyView {
+  display: none;
+  min-height: 100vh;
+  background: #f8fafc;
+}
+.apply-header {
+  background: #0d9488;
+  color: #fff;
+  padding: 18px 20px;
+  text-align: center;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+.apply-header h2 { font-size: 18px; font-weight: 700; }
+.apply-header button {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,0.2);
+  border: none;
+  color: #fff;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 18px;
+  cursor: pointer;
+}
+.apply-container {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 24px 18px 50px;
+}
+.card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 26px 22px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  margin-bottom: 18px;
+}
+.interest-badge {
+  background: #0d9488;
+  color: #fff;
+  text-align: center;
+  padding: 12px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+label {
+  display: block;
+  margin-top: 16px;
+  font-weight: 600;
+  font-size: 14px;
+  color: #334155;
+}
+input, textarea {
+  width: 100%;
+  padding: 12px 14px;
+  margin-top: 6px;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 9px;
+  font-size: 15px;
+  font-family: inherit;
+  transition: 0.2s;
+}
+input:focus, textarea:focus {
+  outline: none;
+  border-color: #0d9488;
+  box-shadow: 0 0 0 3px rgba(13,148,136,0.15);
+}
+.submit-btn {
+  width: 100%;
+  background: #0d9488;
+  color: #fff;
+  border: none;
+  padding: 15px;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 24px;
+  transition: 0.2s;
+}
+.submit-btn:hover { background: #0f766e; }
+.success-msg {
+  background: #dcfce7;
+  color: #166534;
+  padding: 14px;
+  border-radius: 10px;
+  display: none;
+  margin-bottom: 16px;
+  font-weight: 600;
+  border: 1px solid #86efac;
+}
+.disclaimer {
+  background: #fef9c3;
+  border: 1px solid #fde047;
+  padding: 14px;
+  border-radius: 10px;
+  font-size: 13px;
+  color: #713f12;
+  margin-top: 18px;
+}
+
+/* History / Profile cards */
+.history-box {
+  border: 1px solid #e2e8f0;
+  border-left: 5px solid #0d9488;
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 12px;
+  background: #fff;
+}
+.history-box h3 { color: #0d9488; font-size: 16px; margin-bottom: 6px; }
+.history-box p { font-size: 13px; color: #475569; margin: 3px 0; }
+.view-btn, .delete-btn, .clear-btn {
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  margin: 8px 6px 0 0;
+  color: #fff;
+}
+.view-btn { background: #0d9488; }
+.delete-btn, .clear-btn { background: #dc2626; }
+.profile-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: #0d9488;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  font-weight: 700;
+  margin: 0 auto 18px;
+  border: 4px solid #99f6e4;
+}
+
+/* Modal */
+#docModal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.88);
+  z-index: 10000;
+  justify-content: center;
+  align-items: center;
+}
+#docModal img {
+  max-width: 92%;
+  max-height: 88%;
+  border-radius: 10px;
+  background: #fff;
+  padding: 6px;
+}
+
+/* Footer */
+.site-footer {
+  background: #0f172a;
+  color: #94a3b8;
+  text-align: center;
+  padding: 30px 20px;
+  font-size: 13px;
+}
+.site-footer a { color: #5eead4; text-decoration: none; }
+
+/* Utility */
+.hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<!-- ========== 1. SPLASH ========== -->
+<div id="splash" onclick="enterSite()">
+  <div class="top"></div>
+  <div class="middle">
+    <div class="logo-box">
+      <div class="big">AVM</div>
+      <div class="name">INVESTMENTS</div>
+      <div class="sub">PTY LTD</div>
+    </div>
+    <div class="arc">
+      <h1>DO YOU<br>NEED A<br>LOAN?</h1>
+    </div>
+    <button class="find-btn" onclick="enterSite(); event.stopPropagation();">FIND OUT MORE</button>
+  </div>
+  <div class="bottom">avminvestments.co.za</div>
+</div>
+
+<!-- ========== 2. MAIN MARKETING SITE ========== -->
+<div id="mainSite">
+  <header class="site-header">
+    <div class="header-logo">
+      <div class="mark">AVM</div>
+      <div class="text">
+        <strong>AVM INVESTMENTS</strong>
+        <span>PTY LTD</span>
+      </div>
+    </div>
+    <button class="menu-btn" onclick="toggleMenu()">☰</button>
+    <div class="nav-drawer" id="navDrawer">
+      <a onclick="scrollToSection('who')">Who We Are</a>
+      <a onclick="scrollToSection('calculator')">Loan Calculator</a>
+      <a onclick="openApply()">Apply Now</a>
+      <a onclick="openNotifications()">My Applications</a>
+      <a onclick="openProfile()">My Profile</a>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">Welcome to AVM Investments</div>
+      <h1>Your Partner for<br><span>Quick, Honest Lending</span></h1>
+      <p>At AVM Investments, we make borrowing simple, fast, and stress-free. From covering urgent expenses to bridging short-term gaps, our loan solutions are designed to help you get ahead without the hassle.</p>
+      <button class="btn-primary" onclick="openApply()">APPLY NOW</button>
+    </div>
+  </section>
+
+  <!-- Who We Are -->
+  <section class="section" id="who">
+    <div class="section-label">WHO WE ARE</div>
+    <h2>The Trusted Financial Solutions for Real Life</h2>
+    <p>AVM Investments Pty Ltd is a customer-focused microfinance provider dedicated to offering reliable, transparent loan solutions to South Africans. We understand that life can be unpredictable, and our mission is to help you navigate those moments with ease.</p>
+    <p>With simple applications, quick responses, and a commitment to clear communication, we’re here to give you more than just a loan — we give you the confidence to move forward.</p>
+    <button class="btn-teal" onclick="openApply()">CONTACT US / APPLY</button>
+  </section>
+
+  <!-- Calculator + How to apply -->
+  <section class="section" id="calculator">
+    <h2 style="text-align:center; margin-bottom:8px;">Your Loan Application Starts Here</h2>
+    <h3 style="text-align:center; font-size:22px; font-weight:800; margin-bottom:28px;">Loan Calculator</h3>
+
+    <div class="calc-box">
+      <div class="calc-row">
+        <label>
+          Loan Amount
+          <span class="value-box" id="amountDisplay">R1 000</span>
+        </label>
+        <input type="range" id="amountSlider" min="100" max="8000" value="1000" step="50" oninput="updateCalc()">
+        <div class="range-labels"><span>R100</span><span>R8 000</span></div>
+        <p style="font-size:12px; color:#94a3b8; margin-top:6px;">Enter the total loan amount you want to borrow</p>
+      </div>
+
+      <div class="calc-row">
+        <label>
+          Loan Period
+          <span class="value-box" id="periodDisplay">1 Month(s)</span>
+        </label>
+        <input type="range" id="periodSlider" min="1" max="8" value="1" step="1" oninput="updateCalc()">
+        <div class="range-labels"><span>1 Month(s)</span><span>8 Month(s)</span></div>
+      </div>
+
+      <div class="result-card">
+        <h3>Monthly Payment</h3>
+        <div class="big-num" id="monthlyPay">R1 400.00</div>
+        <p class="note">This is an approximate monthly repayment based on 40% interest.</p>
+        
+        <div class="fee-line">
+          <span>Total Interest (40%)</span>
+          <strong id="totalInterest">R400.00</strong>
+        </div>
+        <div class="fee-line">
+          <span>Total Repayment</span>
+          <strong id="totalRepay">R1 400.00</strong>
+        </div>
+
+        <p style="font-size:13px; color:#64748b; margin:16px 0 8px;"><strong>Ready to get started?</strong><br>Click the button below to complete your application.</p>
+        <button class="btn-apply-calc" onclick="openApply()">Apply Now</button>
+      </div>
+    </div>
+
+    <div style="margin-top:40px;">
+      <h3 style="font-size:18px; font-weight:700; margin-bottom:12px;">What you’ll need:</h3>
+      <ul class="need-list">
+        <li>A Cellphone / WhatsApp Number</li>
+        <li>Valid Email Address</li>
+        <li>Supporting document (payslip, bank statement, or ID photo)</li>
+      </ul>
+
+      <h3 style="font-size:18px; font-weight:700; margin:24px 0 12px;">How to apply</h3>
+      <ul class="how-list">
+        <li data-num="1.">Choose the amount you need (use the calculator above)</li>
+        <li data-num="2.">Click “Apply Now” and fill in your details</li>
+        <li data-num="3.">Upload a supporting document and submit</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    Contact: <a href="mailto:Amahlembutho0@gmail.com">Amahlembutho0@gmail.com</a><br>
+    40% Interest • Terms & Conditions Apply<br>
+    © 2026 AVM Investments Pty Ltd
+  </footer>
+</div>
+
+<!-- ========== 3. APPLICATION FORM (your original logic) ========== -->
+<div id="applyView">
+  <div class="apply-header">
+    <button onclick="backToMain()">←</button>
+    <h2>Loan Application</h2>
+  </div>
+  <div class="apply-container">
+    <div class="card">
+      <div class="interest-badge">40% Interest • Terms & Conditions Apply</div>
+      <div id="success" class="success-msg">✅ Application Sent! We emailed Amahlembutho0@gmail.com.</div>
+
+      <form id="loanForm" action="https://formsubmit.co/Amahlembutho0@gmail.com" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="_subject" value="New Loan Application - AVM Investments (40% Interest)">
+        <input type="hidden" name="_captcha" value="false">
+
+        <label>Full Name</label>
+        <input type="text" id="name" name="Full Name" required placeholder="e.g. Thabo Molefe">
+
+        <label>Email</label>
+        <input type="email" id="email" name="Applicant Email" required placeholder="you@email.com">
+
+        <label>Phone / WhatsApp</label>
+        <input type="tel" id="whatsapp" name="WhatsApp Number" required placeholder="082 123 4567">
+
+        <label>Loan Amount (ZAR)</label>
+        <input type="number" id="amount" name="Loan Amount" required placeholder="e.g. 2500" min="100">
+
+        <label>Why do you want this loan?</label>
+        <textarea id="reason" name="Reason for Loan" rows="4" required placeholder="Briefly explain the purpose..."></textarea>
+
+        <label>Upload Supporting Document</label>
+        <input type="file" id="docInput" name="Supporting Document" accept="image/*" required>
+
+        <button type="submit" class="submit-btn">Submit Application (40% Interest)</button>
+      </form>
+
+      <div class="disclaimer">
+        <strong>Important:</strong> By submitting you agree to the 40% interest rate and our terms. This is a private lending service operated by AVM Investments Pty Ltd.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 4. NOTIFICATIONS VIEW ========== -->
+<div id="notificationsView" class="hidden">
+  <div class="apply-header">
+    <button onclick="backToMain()">←</button>
+    <h2>My Applications</h2>
+  </div>
+  <div class="apply-container">
+    <div class="card">
+      <button class="clear-btn" onclick="clearAllHistory()">Clear All History</button>
+      <div id="historyList"><p style="color:#64748b;">No applications yet.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 5. PROFILE VIEW ========== -->
+<div id="profileView" class="hidden">
+  <div class="apply-header">
+    <button onclick="backToMain()">←</button>
+    <h2>My Profile</h2>
+  </div>
+  <div class="apply-container">
+    <div class="card">
+      <div id="profileContent">
+        <p style="color:#64748b; text-align:center;">No profile yet. Submit a loan application first.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Document Modal -->
+<div id="docModal" onclick="this.style.display='none'">
+  <img id="modalImg" src="" alt="Document">
+</div>
+
+<script>
+/* ===== SPLASH & NAVIGATION ===== */
+function enterSite() {
+  document.getElementById('splash').style.display = 'none';
+  document.getElementById('mainSite').style.display = 'block';
+  window.scrollTo(0, 0);
+}
+
+function toggleMenu() {
+  document.getElementById('navDrawer').classList.toggle('open');
+}
+
+function scrollToSection(id) {
+  document.getElementById('navDrawer').classList.remove('open');
+  document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+}
+
+function openApply() {
+  document.getElementById('navDrawer').classList.remove('open');
+  hideAllViews();
+  document.getElementById('applyView').style.display = 'block';
+  window.scrollTo(0, 0);
+}
+
+function openNotifications() {
+  document.getElementById('navDrawer').classList.remove('open');
+  hideAllViews();
+  document.getElementById('notificationsView').classList.remove('hidden');
+  loadHistory();
+  window.scrollTo(0, 0);
+}
+
+function openProfile() {
+  document.getElementById('navDrawer').classList.remove('open');
+  hideAllViews();
+  document.getElementById('profileView').classList.remove('hidden');
+  loadProfile();
+  window.scrollTo(0, 0);
+}
+
+function backToMain() {
+  hideAllViews();
+  document.getElementById('mainSite').style.display = 'block';
+  window.scrollTo(0, 0);
+}
+
+function hideAllViews() {
+  document.getElementById('mainSite').style.display = 'none';
+  document.getElementById('applyView').style.display = 'none';
+  document.getElementById('notificationsView').classList.add('hidden');
+  document.getElementById('profileView').classList.add('hidden');
+}
+
+/* ===== LOAN CALCULATOR (40% interest) ===== */
+function updateCalc() {
+  const amount = parseInt(document.getElementById('amountSlider').value);
+  const months = parseInt(document.getElementById('periodSlider').value);
+
+  document.getElementById('amountDisplay').textContent = 'R' + amount.toLocaleString();
+  document.getElementById('periodDisplay').textContent = months + ' Month(s)';
+
+  // Simple 40% flat interest
+  const interest = amount * 0.40;
+  const total = amount + interest;
+  const monthly = total / months;
+
+  document.getElementById('monthlyPay').textContent = 'R' + monthly.toFixed(2);
+  document.getElementById('totalInterest').textContent = 'R' + interest.toFixed(2);
+  document.getElementById('totalRepay').textContent = 'R' + total.toFixed(2);
+}
+updateCalc(); // init
+
+/* ===== ORIGINAL FORM + LOCALSTORAGE LOGIC (unchanged) ===== */
+document.getElementById('loanForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const file = document.getElementById('docInput').files[0];
+  const r = new FileReader();
+  r.onload = function(ev) {
+    const app = {
+      name: document.getElementById('name').value,
+      email: document.getElementById('email').value,
+      whatsapp: document.getElementById('whatsapp').value,
+      amount: document.getElementById('amount').value,
+      reason: document.getElementById('reason').value,
+      date: new Date().toLocaleString(),
+      status: "Pending",
+      docData: ev.target.result,
+      docName: file ? file.name : ''
+    };
+    let h = JSON.parse(localStorage.getItem('loanHistory') || '[]');
+    h.unshift(app);
+    localStorage.setItem('loanHistory', JSON.stringify(h));
+
+    const profile = {
+      name: app.name,
+      email: app.email,
+      whatsapp: app.whatsapp,
+      lastAmount: app.amount
+    };
+    localStorage.setItem('userProfile', JSON.stringify(profile));
+
+    document.getElementById('success').style.display = 'block';
+    setTimeout(() => {
+      document.getElementById('loanForm').submit();
+    }, 600);
+  };
+  if (file) r.readAsDataURL(file);
+});
+
+function loadHistory() {
+  const h = JSON.parse(localStorage.getItem('loanHistory') || '[]');
+  let html = h.length ? '' : '<p style="color:#64748b;">No applications yet.</p>';
+  h.forEach((app, i) => {
+    html += `
+      <div class="history-box">
+        <h3>R${app.amount} – ${app.name}</h3>
+        <p><b>Date:</b> ${app.date}</p>
+        <p><b>Email:</b> ${app.email}</p>
+        <p><b>WhatsApp:</b> ${app.whatsapp}</p>
+        <p><b>Status:</b> ${app.status} • 40% Interest</p>
+        <button class="view-btn" onclick="viewDoc(${i})">View Document</button>
+        <button class="delete-btn" onclick="deleteOne(${i})">Delete</button>
+      </div>`;
+  });
+  document.getElementById('historyList').innerHTML = html;
+}
+
+function viewDoc(i) {
+  const h = JSON.parse(localStorage.getItem('loanHistory') || '[]');
+  document.getElementById('modalImg').src = h[i].docData;
+  document.getElementById('docModal').style.display = 'flex';
+}
+
+function deleteOne(i) {
+  if (!confirm("Delete this application?")) return;
+  let h = JSON.parse(localStorage.getItem('loanHistory') || '[]');
+  h.splice(i, 1);
+  localStorage.setItem('loanHistory', JSON.stringify(h));
+  loadHistory();
+  loadProfile();
+}
+
+function clearAllHistory() {
+  if (!confirm("Clear ALL loan history?")) return;
+  localStorage.removeItem('loanHistory');
+  localStorage.removeItem('userProfile');
+  loadHistory();
+  loadProfile();
+}
+
+function loadProfile() {
+  const profile = JSON.parse(localStorage.getItem('userProfile'));
+  const div = document.getElementById('profileContent');
+  if (!profile) {
+    div.innerHTML = '<p style="color:#64748b; text-align:center;">No profile yet. Submit a loan application first.</p>';
+    return;
+  }
+  const initials = profile.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+  div.innerHTML = `
+    <div class="profile-img">${initials}</div>
+    <label>Full Name</label>
+    <input type="text" value="${profile.name}" readonly>
+    <label>Email</label>
+    <input type="email" value="${profile.email}" readonly>
+    <label>WhatsApp Number</label>
+    <input type="text" value="${profile.whatsapp}" readonly>
+    <label>Last Loan Amount</label>
+    <input type="text" value="R${profile.lastAmount} – 40% Interest" readonly>
+  `;
+}
+
+// Close menu when clicking outside
+document.addEventListener('click', function(e) {
+  const drawer = document.getElementById('navDrawer');
+  const btn = document.querySelector('.menu-btn');
+  if (!drawer.contains(e.target) && !btn.contains(e.target)) {
+    drawer.classList.remove('open');
+  }
+});
+</script>
+</body>
+</html>
