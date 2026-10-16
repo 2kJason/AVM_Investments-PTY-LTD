@@ -608,6 +608,48 @@ input:focus, textarea:focus {
 
 /* Utility */
 .hidden { display: none !important; }
+
+/* ===== RESPONSIVE POLISH & ACCESSIBILITY ===== */
+html { scroll-behavior: smooth; scroll-padding-top: 82px; }
+body { overflow-wrap: anywhere; }
+button, input, textarea, a { -webkit-tap-highlight-color: transparent; }
+button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible { outline: 3px solid #14b8a6; outline-offset: 3px; }
+.site-header { padding-left: max(18px, calc((100vw - 1100px)/2)); padding-right: max(18px, calc((100vw - 1100px)/2)); }
+.hero { padding-top: clamp(54px, 8vw, 92px); padding-bottom: clamp(58px, 8vw, 96px); }
+.hero h1 { font-size: clamp(30px, 5vw, 48px); }
+.section { max-width: 900px; padding: clamp(38px, 6vw, 68px) clamp(18px, 4vw, 30px); }
+.section h2 { font-size: clamp(24px, 4vw, 34px); }
+.calc-box { max-width: 720px; margin-left: auto; margin-right: auto; }
+.site-footer { line-height: 1.9; }
+#contactForm .submit-btn { max-width: 100%; }
+.contact-grid { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 24px; align-items: start; }
+.contact-panel { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 16px; padding: 24px; }
+.contact-panel a { color: #0f766e; font-weight: 700; overflow-wrap: anywhere; }
+.reveal { opacity: 0; transform: translateY(14px); transition: opacity .55s ease, transform .55s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.form-status { display:none; margin-top:14px; padding:12px; border-radius:9px; background:#f0fdfa; color:#115e59; font-size:14px; }
+@media (min-width: 900px) {
+  .hero-content { max-width: 760px; }
+  .hero p { max-width: 620px; font-size: 17px; }
+  .nav-drawer { right: max(18px, calc((100vw - 1100px)/2)); }
+}
+@media (max-width: 620px) {
+  .contact-grid { grid-template-columns: 1fr; }
+  .hero { padding-left: 18px; padding-right: 18px; }
+  .hero h1 { font-size: clamp(28px, 8vw, 36px); }
+  .section { padding-left: 18px; padding-right: 18px; }
+  .calc-box { padding: 22px 16px; }
+  .result-card .big-num { font-size: 28px; }
+  .apply-container { padding-left: 12px; padding-right: 12px; }
+  .card { padding: 22px 16px; }
+  #splash .arc { width: min(270px, 78vw); }
+  #splash .logo-box { top: 18px; right: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+  .reveal { opacity: 1; transform: none; }
+}
+
 </style>
 </head>
 <body>
@@ -645,7 +687,7 @@ input:focus, textarea:focus {
       <a onclick="scrollToSection('calculator')">Loan Calculator</a>
       <a onclick="openApply()">Apply Now</a>
       <a onclick="openNotifications()">My Applications</a>
-      <a onclick="openProfile()">My Profile</a>
+      <a onclick="openProfile()">Client Dashboard / My Profile</a>
     </div>
   </header>
 
@@ -729,9 +771,38 @@ input:focus, textarea:focus {
     </div>
   </section>
 
+
+  <!-- Contact section -->
+  <section class="section reveal" id="contact">
+    <div class="section-label">GET IN TOUCH</div>
+    <h2>Contact AVM Investments</h2>
+    <p>Send a general enquiry and the team can follow up using the contact details you provide.</p>
+    <div class="contact-grid">
+      <div class="contact-panel">
+        <h3 style="font-size:18px;margin-bottom:12px;color:#111;">Company contact</h3>
+        <p><strong>Email</strong><br><a href="mailto:Amahlembutho0@gmail.com">Amahlembutho0@gmail.com</a></p>
+        <p style="font-size:13px;margin-top:18px;">For your privacy, do not send identity documents, bank statements, passwords or other sensitive information through a general enquiry form.</p>
+      </div>
+      <div class="contact-panel">
+        <form id="contactForm" action="https://formsubmit.co/Amahlembutho0@gmail.com" method="POST">
+          <input type="hidden" name="_subject" value="General Enquiry - AVM Investments">
+          <input type="hidden" name="_captcha" value="false">
+          <label for="contactName">Your name</label>
+          <input id="contactName" name="Name" autocomplete="name" required maxlength="100" placeholder="Full name">
+          <label for="contactEmail">Email address</label>
+          <input id="contactEmail" name="Email" type="email" autocomplete="email" required maxlength="160" placeholder="you@example.com">
+          <label for="contactMessage">How can we help?</label>
+          <textarea id="contactMessage" name="Message" rows="4" required maxlength="2000" placeholder="Write your enquiry (no sensitive documents)"></textarea>
+          <button class="submit-btn" type="submit">Send enquiry</button>
+          <p style="font-size:12px;margin:12px 0 0;">Submitting opens the configured external form service. Availability and email delivery depend on that service.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
   <footer class="site-footer">
     Contact: <a href="mailto:Amahlembutho0@gmail.com">Amahlembutho0@gmail.com</a><br>
-    40% Interest • Terms & Conditions Apply<br>
+    Loan calculator figures are estimates only. Confirm all rates, fees, terms and eligibility directly before making a financial decision.<br>
     © 2026 AVM Investments Pty Ltd
   </footer>
 </div>
@@ -819,6 +890,7 @@ function enterSite() {
   document.getElementById('splash').style.display = 'none';
   document.getElementById('mainSite').style.display = 'block';
   window.scrollTo(0, 0);
+  startRevealAnimations();
 }
 
 function toggleMenu() {
@@ -875,7 +947,7 @@ function updateCalc() {
   document.getElementById('periodDisplay').textContent = months + ' Month(s)';
 
   // Simple 40% flat interest
-  const interest = amount * 0.40;
+  const interest = amount * 0.40; // Existing illustrative flat-rate estimate; confirm actual terms with the company.
   const total = amount + interest;
   const monthly = total / months;
 
@@ -985,6 +1057,38 @@ function loadProfile() {
 }
 
 // Close menu when clicking outside
+
+/* Lightweight scroll reveals; respects reduced-motion preferences. */
+function startRevealAnimations() {
+  const items = document.querySelectorAll('.reveal:not(.visible)');
+  if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    items.forEach(el => el.classList.add('visible'));
+    return;
+  }
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  items.forEach(el => observer.observe(el));
+}
+document.addEventListener('DOMContentLoaded', startRevealAnimations);
+
+/* Keep navigation/contact forms usable and prevent duplicate rapid submissions. */
+['loanForm','contactForm'].forEach(id => {
+  const form = document.getElementById(id);
+  if (form) form.addEventListener('submit', () => {
+    const button = form.querySelector('button[type="submit"]');
+    if (button) {
+      button.disabled = true;
+      button.textContent = id === 'loanForm' ? 'Submitting…' : 'Sending…';
+    }
+  });
+});
+
 document.addEventListener('click', function(e) {
   const drawer = document.getElementById('navDrawer');
   const btn = document.querySelector('.menu-btn');
